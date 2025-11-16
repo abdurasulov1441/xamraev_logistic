@@ -1,12 +1,15 @@
-
 import 'package:go_router/go_router.dart';
+import 'package:xamraev_logistic/app/permissions/get_permissions.dart';
 import 'package:xamraev_logistic/pages/auth/login_page.dart';
+import 'package:xamraev_logistic/pages/home_screen.dart';
+import 'package:xamraev_logistic/pages/user_page/user_page.dart';
 import 'package:xamraev_logistic/services/db/cache.dart';
 
 abstract class Routes {
-  static const welcome = '/welcome';
   static const homeScreen = '/homeScreen';
   static const loginPage = '/loginPage';
+  static const permissionPage = '/permissionPage';
+  static const userPage = '/userPage';
 }
 
 String _initialLocation() {
@@ -19,7 +22,6 @@ String _initialLocation() {
   if (userToken != null) {
     return Routes.homeScreen;
   } else {
- 
     return Routes.loginPage;
   }
 }
@@ -36,6 +38,17 @@ final router = GoRouter(
       path: Routes.loginPage,
       builder: (context, state) => const LoginPage(),
     ),
-   
+    GoRoute(
+      path: Routes.userPage,
+      builder: (context, state) => const UserPage(),
+    ),
+    GoRoute(
+      path: Routes.homeScreen,
+      builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: Routes.permissionPage,
+      builder: (context, state) => const PermissionScreen(),
+    ),
   ],
 );
