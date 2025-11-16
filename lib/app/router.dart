@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:xamraev_logistic/app/permissions/get_permissions.dart';
 import 'package:xamraev_logistic/pages/auth/login_page.dart';
 import 'package:xamraev_logistic/pages/home_screen.dart';
+import 'package:xamraev_logistic/pages/user_page/petrol_get_page/petrol_get_page.dart';
 import 'package:xamraev_logistic/pages/user_page/user_page.dart';
 import 'package:xamraev_logistic/services/db/cache.dart';
 
@@ -10,6 +11,7 @@ abstract class Routes {
   static const loginPage = '/loginPage';
   static const permissionPage = '/permissionPage';
   static const userPage = '/userPage';
+  static const petrolGet = '/petrolGet';
 }
 
 String _initialLocation() {
@@ -49,6 +51,10 @@ final router = GoRouter(
     GoRoute(
       path: Routes.permissionPage,
       builder: (context, state) => const PermissionScreen(),
+    ),
+    GoRoute(
+      path: Routes.petrolGet,
+      builder: (context, state) => const PetrolGetPage(),
     ),
   ],
 );
