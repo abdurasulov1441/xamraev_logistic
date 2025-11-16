@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676136383780",
+    "project_id": "xamraev-logis",
+    "storage_bucket": "xamraev-logis.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676136383780:android:c5db45092e69c659f42fb1",
+        "android_client_info": {
+          "package_name": "uz.xamraev_logistic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV0NwK-fDwJQAAhjmQfCPkyd1A0zKjxXs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
