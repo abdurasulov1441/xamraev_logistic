@@ -17,8 +17,8 @@ abstract class Routes {
 String _initialLocation() {
   // return Routes.permissionPage;
 
-  final userToken = cache.getString("user_token");
-  String? refreshToken = cache.getString('refresh_token');
+  final userToken = cache.getString("accessToken");
+  String? refreshToken = cache.getString('refreshToken');
   print('Refresh Token: $refreshToken');
 
   if (userToken != null) {

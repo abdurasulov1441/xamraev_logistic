@@ -93,6 +93,9 @@ class _PetrolGetPageState extends State<PetrolGetPage> {
             ),
 
             const SizedBox(height: 16),
+            CustomTextField(controller: amountController, hint: "Narxi (so'm)"),
+
+            const SizedBox(height: 16),
             CustomTextField(
               controller: speedometerController,
               hint: 'Spidometr koʼrsatkichi',
