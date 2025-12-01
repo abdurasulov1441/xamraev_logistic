@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xamraev_logistic/app/router.dart';
@@ -52,8 +50,8 @@ class _LoginPageState extends State<LoginPage> {
       final user = data['user'];
 
       // Tokenlar
-      await cache.setString('accessToken', data['accessToken']);
-      await cache.setString('refreshToken', data['refreshToken']);
+      await cache.setString('user_token', data['accessToken']);
+      await cache.setString('refresh_token', data['refreshToken']);
 
       // User ma'lumotlari (alohida)
       await cache.setInt('user_id', user['id']);
@@ -73,15 +71,19 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       if (!mounted) return;
-      if (user['roleId'] == 2) {
-        showErrorToast(context, "Siz adminsiz", "Admin panel web saytda");
-        return;
-      } else if (user['roleId'] == 1) {
-        context.go(Routes.userPage);
+
+      if (user['roleId'] == 1) {
+        context.go(Routes.homeScreen);
+
         return;
       }
 
-      context.go(Routes.userPage);
+      if (user['roleId'] == 2) {
+        showErrorToast(context, "Siz adminsiz", "Admin panel web saytda");
+        return;
+      }
+
+      context.go(Routes.homeScreen);
     } catch (e) {
       ScaffoldMessenger.of(
         context,

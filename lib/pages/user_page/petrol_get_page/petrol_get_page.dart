@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:xamraev_logistic/services/db/cache.dart';
 import 'package:xamraev_logistic/services/document_button.dart';
 import 'package:xamraev_logistic/services/gradientbutton.dart';
+import 'package:xamraev_logistic/services/request_helper.dart';
 import 'package:xamraev_logistic/services/style/app_colors.dart';
 import 'package:xamraev_logistic/services/style/app_style.dart';
 
@@ -22,6 +25,7 @@ class _PetrolGetPageState extends State<PetrolGetPage> {
 
   final TextEditingController amountController = TextEditingController();
   final TextEditingController speedometerController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
 
   Future<void> pickPhoto() async {
@@ -35,17 +39,112 @@ class _PetrolGetPageState extends State<PetrolGetPage> {
     return;
   }
 
-  Future<void> sendPetrol() async {
-    print('Fuel Type: $selectedFuelType');
-    print('Amount: ${amountController.text}');
-    print('Speedometer: ${speedometerController.text}');
-    print('Note: ${noteController.text}');
-    print('Photo File: ${photoFile?.path}');
-    print('Video File: ${videoFile?.path}');
+  Future<String?> uploadPhoto(File file) async {
+    final formData = dio.FormData.fromMap({
+      'file': await dio.MultipartFile.fromFile(
+        file.path,
+        filename: file.path.split('/').last,
+        contentType: dio.DioMediaType('image', 'jpg'),
+      ),
+    });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Petrol data sent successfully!')),
+    final response = await requestHelper.postWithAuthMultipart(
+      "/api/v1/upload/photo",
+      formData,
+      log: true,
     );
+
+    if (response["success"] == true) {
+      return response["data"]["url"];
+    }
+    return null;
+  }
+
+  Future<String?> uploadVideo(File file) async {
+    final formData = dio.FormData.fromMap({
+      'file': await dio.MultipartFile.fromFile(
+        file.path,
+        filename: file.path.split('/').last,
+        contentType: dio.DioMediaType('video', 'mp4'),
+      ),
+    });
+
+    final response = await requestHelper.postWithAuthMultipart(
+      "/api/v1/upload/video",
+      formData,
+      log: true,
+    );
+
+    if (response["success"] == true) {
+      return response["data"]["url"];
+    }
+    return null;
+  }
+
+  Future<void> sendPetrol() async {
+    if (selectedFuelType == null) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Yoqilg‘i turini tanlang")));
+      return;
+    }
+
+    final userId = cache.getInt("user_id");
+
+    int fuelTypeId = switch (selectedFuelType) {
+      "benzin" => 1,
+      "gaz" => 2,
+      "solyarka" => 3,
+      "diesel" => 4,
+      _ => 1,
+    };
+
+    // 1️⃣ Foto yuklash
+    String? photoFilename;
+    if (photoFile != null) {
+      photoFilename = await uploadPhoto(photoFile!);
+    }
+
+    // 2️⃣ Video yuklash
+    String? videoFilename;
+    if (videoFile != null) {
+      videoFilename = await uploadVideo(videoFile!);
+    }
+
+    // 3️⃣ Asosiy POST /refuels
+    final body = {
+      "userId": userId,
+      "fuelTypeId": fuelTypeId,
+      "cubLitr": int.parse(amountController.text),
+      "amount": int.parse(priceController.text),
+      "odometer": int.parse(speedometerController.text),
+      "photoUrl": photoFilename,
+      "videoUrl": videoFilename,
+      "comment": noteController.text.trim(),
+    };
+
+    try {
+      final res = await requestHelper.postWithAuth(
+        "/api/v1/refuels",
+        body,
+        log: true,
+      );
+
+      if (res["success"] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Muvaffaqiyatli yuborildi!")),
+        );
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Xatolik: ${res["message"]}")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Xatolik: $e")));
+    }
   }
 
   void openFuelTypeSelector() {
@@ -93,7 +192,7 @@ class _PetrolGetPageState extends State<PetrolGetPage> {
             ),
 
             const SizedBox(height: 16),
-            CustomTextField(controller: amountController, hint: "Narxi (so'm)"),
+            CustomTextField(controller: priceController, hint: "Narxi (so'm)"),
 
             const SizedBox(height: 16),
             CustomTextField(

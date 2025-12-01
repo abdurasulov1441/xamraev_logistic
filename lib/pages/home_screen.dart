@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
       return null;
     } on UnauthenticatedError {
-      cache.clear();
       return null;
     } catch (e) {
       return null;

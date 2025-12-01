@@ -38,22 +38,30 @@ class UserPage extends StatelessWidget {
             ServiceListContainer(
               imagePath: 'tire',
               label: 'shina_get',
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.shinaGet);
+              },
             ),
             ServiceListContainer(
               imagePath: 'oil',
               label: 'masla_get',
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.maslaGet);
+              },
             ),
             ServiceListContainer(
               imagePath: 'service',
               label: 'remont_get',
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.remontGet);
+              },
             ),
             ServiceListContainer(
               imagePath: 'other',
               label: 'other_get',
-              onTap: () {},
+              onTap: () {
+                context.push(Routes.otherGet);
+              },
             ),
           ],
         ),

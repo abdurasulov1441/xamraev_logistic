@@ -32,7 +32,7 @@ final class RequestHelper {
     bool isMultipart = false,
   }) {
     return {
-      'Authorization': '$token',
+      'Authorization': 'Bearer $token',
       'Content-Type': isMultipart ? 'multipart/form-data' : 'application/json',
       'Accept': 'application/json',
       if (languageCode != null) 'Accept-Language': languageCode,
@@ -142,7 +142,7 @@ final class RequestHelper {
 
     Map<String, String> buildHeaders(String token) {
       return {
-        'Authorization': '$token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         if (languageCode != null) 'Accept-Language': languageCode,
@@ -329,7 +329,7 @@ final class RequestHelper {
 
     Map<String, String> buildHeaders(String token) {
       return {
-        'Authorization': '$token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         if (languageCode != null) 'Accept-Language': languageCode,
@@ -496,7 +496,7 @@ final class RequestHelper {
 
     Map<String, String> buildHeaders(String token) {
       return {
-        'Authorization': '$token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         if (languageCode != null) 'Accept-Language': languageCode,
@@ -661,7 +661,7 @@ final class RequestHelper {
 
     Map<String, String> buildHeaders(String token) {
       return {
-        'Authorization': '$token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         if (languageCode != null) 'Accept-Language': languageCode,
@@ -1023,7 +1023,7 @@ final class RequestHelper {
 
     Map<String, String> buildHeaders(String token) {
       return {
-        'Authorization': '$token',
+        'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         if (languageCode != null) 'Accept-Language': languageCode,
