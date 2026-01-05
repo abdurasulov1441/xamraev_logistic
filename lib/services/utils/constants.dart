@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract final class Constants {
   static const double leftPadding = 34;
-  static const baseUrl = 'http://45.138.159.239';
+  static const baseUrl = 'https://xamraev.uz';
   static const callCenter = '+998900961704';
 
   static const ofertaLink = 'https://insurance.uz/ru/terms-of-use';

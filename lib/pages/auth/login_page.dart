@@ -72,13 +72,13 @@ class _LoginPageState extends State<LoginPage> {
 
       if (!mounted) return;
 
-      if (user['roleId'] == 1) {
+      if (user['roleId'] == 2) {
         context.go(Routes.homeScreen);
 
         return;
       }
 
-      if (user['roleId'] == 2) {
+      if (user['roleId'] == 1) {
         showErrorToast(context, "Siz adminsiz", "Admin panel web saytda");
         return;
       }

@@ -82,12 +82,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
         switch (roleId) {
           case 1:
-            return const UserPage();
+            cache.clear();
+            return const LoginPage();
           // return const AdminPage();
 
           case 2:
-            cache.clear();
-            return const LoginPage();
+            return const UserPage();
 
           default:
             cache.clear();
